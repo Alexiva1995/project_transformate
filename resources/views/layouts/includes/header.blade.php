@@ -27,7 +27,7 @@
             <span class="font-h3"><i class="fa fa-bars header-icon"></i>  </span>
         </a>
         {{-- Menú Desplegable de Barras --}}
-        <div id="offcanvas-menu-bars" uk-offcanvas="mode: push; overlay: true"> 
+        <div id="offcanvas-menu-bars" uk-offcanvas="mode: push; overlay: true">
             <div class="uk-offcanvas-bar">
                 <div class="menu-bars-content header-background-ligth" id="menu-bars-content">
                     <div class="offcanvas-header">
@@ -36,12 +36,12 @@
                             <img src="{{ asset('template/images/logocoloresinvert.png')}}">
                         </a>
                     </div>
-                    
+
                     <ul class="menu">
-                        <li> 
+                        <li>
                             <a href="#" uk-toggle="target: #offcanvas-categories">
                                 <span>
-                                    <i class="fas fa-video"></i> T-Cursos 
+                                    <i class="fas fa-video"></i> T-Cursos
                                     <i class="fa fa-arrow-alt-circle-right bars-menu-icon-left"></i>
                                 </span>
                             </a>
@@ -110,7 +110,7 @@
     </div>
 
     {{--Menú Derecho --}}
-    <div class="uk-navbar-right">       
+    <div class="uk-navbar-right">
         <a id="search-icon">
             <span class="font-h3"><i class="fa fa-search header-icon"></i></span>
         </a>
@@ -279,7 +279,7 @@
                                 </a><span></span>
                             </li>
                         @endif
-                        <li> 
+                        <li>
                             <a @if (Auth::user()->role_id == 1) href="{{ route('students.profile.my-profile') }}" @elseif (Auth::user()->role_id == 2) href="{{ route('instructors.profile.my-profile') }}" @elseif (Auth::user()->role_id == 4) href="{{ route('partners.profile.my-profile') }}" @else href="{{ route('admins.profile.my-profile') }}" @endif>
                                 <span><i class="fas fa-user"></i> Mi Cuenta</span>
                             </a>
@@ -333,8 +333,49 @@
             @endif
         @endif
 
+        <div class="menu-links-reduced">
+            <a href="#" class="link-reduced">
+                <span class="font-h3">...</span>
+            </a>
+            <div uk-dropdown="pos: bottom" style="padding: 0 0;">
+                <div class="header-background-ligth" style="padding: 10px 15px;">
+                    <ul class="menu">
+                        @if ( (!Auth::guest()) && (Auth::user()->role_id == 1) )
+                            <li>
+                                <a href="{{ route('students.my-content') }}">
+                                    <span><i class="fas fa-video"></i> Mis Cursos</span>
+                                </a>
+                            </li>
+                        @endif
+                        @if (Auth::guest())
+                            <li>
+                                <a href="{{ route('landing.t-mentor') }}">
+                                    <span><i class="fa fa-users"></i> T-Mentor</span>
+                                </a>
+                            </li>
+                        @elseif (Auth::user()->role_id == 2)
+                            <li>
+                                <a href="{{ route('instructors.courses.steps') }}">
+                                    <span><i class="fa fa-users"></i> T-Mentor</span>
+                                </a>
+                            </li>
+                        @endif
+                        <li>
+                            <a href="{{ route('landing.t-member') }}">
+                                <span><i class="fa fa-user-tie"></i> T-Member</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Menú de Opciones--}}
+    <div class="uk-navbar-right header-large-right">
+
         <a href="#" class="header-link">
-            <span class="font-h3">Educación Online <i class="fa fa-chevron-down"></i></span>
+            <span class="font-h3">T-Cursos <i class="fa fa-chevron-down"></i></span>
         </a>
         <div uk-dropdown="pos: bottom" class="categories_dropdown">
             <div class="uk-grid uk-child-width-1-2 no-padding">
@@ -369,72 +410,16 @@
             </div>
         </div>
 
-        <div class="menu-links">
+        <div class="menu-links" style="border-right: 4px solid #fff;margin-right: 15px;">
             @if (Auth::guest())
                 <a href="{{ route('landing.t-mentor') }}" class="header-link">
-                    <span class="font-h3">T-Mentor</span>
+                    <span class="font-h3">T-Eventos</span>
                 </a>
             @elseif (Auth::user()->role_id == 2)
                 <a href="{{ route('instructors.courses.steps') }}" class="header-link">
-                    <span class="font-h3">T-Mentor</span>
+                    <span class="font-h3">T-Eventos</span>
                 </a>
             @endif
-            <a href="{{ route('landing.t-member') }}" class="header-link">
-                <span class="font-h3">T-Member</span>
-            </a>
-            @if ( (!Auth::guest()) && (Auth::user()->role_id == 1) )
-                <a href="{{ route('students.my-content') }}" class="header-link">
-                    <span class="font-h3">Mis Cursos</span>
-                </a> 
-            @endif
-        </div>
-        <div class="menu-links-reduced">
-            <a href="#" class="link-reduced">
-                <span class="font-h3">...</span>
-            </a>
-            <div uk-dropdown="pos: bottom" style="padding: 0 0;">
-                <div class="header-background-ligth" style="padding: 10px 15px;">
-                    <ul class="menu">
-                        @if ( (!Auth::guest()) && (Auth::user()->role_id == 1) )
-                            <li>
-                                <a href="{{ route('students.my-content') }}">
-                                    <span><i class="fas fa-video"></i> Mis Cursos</span>
-                                </a> 
-                            </li>
-                        @endif
-                        @if (Auth::guest())
-                            <li>
-                                <a href="{{ route('landing.t-mentor') }}">
-                                    <span><i class="fa fa-users"></i> T-Mentor</span>
-                                </a>
-                            </li>
-                        @elseif (Auth::user()->role_id == 2)
-                            <li>
-                                <a href="{{ route('instructors.courses.steps') }}">
-                                    <span><i class="fa fa-users"></i> T-Mentor</span>
-                                </a>
-                            </li>
-                        @endif
-                        <li>
-                            <a href="{{ route('landing.t-member') }}">
-                                <span><i class="fa fa-user-tie"></i> T-Member</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    {{-- Menú de Opciones--}} 
-    <div class="uk-navbar-right header-large-right">
-        <div class="uk-navbar-item">
-            <form action="{{ route('landing.search') }}" method="GET" id="search-form-pc">
-                <div class="uk-inline">
-                    <a class="uk-form-icon uk-form-icon-flip" href="#" uk-icon="icon: search;" onclick="buscar('pc');"></a>
-                    <input class="uk-input" type="text" name="busqueda" placeholder="Buscar cursos...">
-                </div>
-            </form>
         </div>
 
         @if ( (!Auth::guest()) && (Auth::user()->role_id < 3) )
@@ -446,7 +431,7 @@
             <a class="login-link-header" href="#modal-login" uk-toggle>
                 Entrar
             </a>
-            <a class="transf-button register-button-header" href="#modal-register" uk-toggle>Crear Cuenta</a>
+            <a class="transf-button register-button-header" href="#modal-register" uk-toggle>Creadr Cuenta</a>
         @else
             <a href="javascript:;" class="header-icon">
                 <span class="font-h3"> <i class="fas fa-bell"></i></span>
@@ -468,6 +453,6 @@
                     </ul>
                 </div>
             </div>
-        @endif 
+        @endif
     </div>
 </nav>
